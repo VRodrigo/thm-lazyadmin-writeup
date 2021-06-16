@@ -1,0 +1,4 @@
+/.htaccess            (Status: 403) [Size: 277]
+/.htpasswd            (Status: 403) [Size: 277]
+/content              (Status: 301) [Size: 314] [--> http://10.10.115.41/content/]
+/server-status        (Status: 403) [Size: 277]
