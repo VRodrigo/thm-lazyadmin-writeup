@@ -74,4 +74,69 @@ Parametros:
   * -w : Diccionario para sus pruebas.
   * -o : Guarda la salida del comando en un fichero.
 
+```
+
+
+```
+
+Visitamos la pagina http://IPMACHINE/content
+
+![index_CMS](img/index_CMS.PNG)
+
+Nos encontramos la home de un CMS llamado _sweetrice_, sobre esta base realizamos otra enumeracion con go buster
+
+> gobuster dir -u http://IPMACHINE/content -w /usr/share/wordlist/dirb/big.txt -x php,cgi,html,py,js,css,sh,txt -o godir_scan.txt
+
+```/_themes              (Status: 301) [Size: 322] [--> http://10.10.115.41/content/_themes/]
+/as                   (Status: 301) [Size: 317] [--> http://10.10.115.41/content/as/]
+/attachment           (Status: 301) [Size: 325] [--> http://10.10.115.41/content/attachment/]
+/changelog.txt        (Status: 200) [Size: 18013]
+/images               (Status: 301) [Size: 321] [--> http://10.10.115.41/content/images/]
+/inc                  (Status: 301) [Size: 318] [--> http://10.10.115.41/content/inc/]
+/index.php            (Status: 200) [Size: 2198]
+/js                   (Status: 301) [Size: 317] [--> http://10.10.115.41/content/js/]
+/license.txt          (Status: 200) [Size: 15410]
+```
+
+(para mas info buscar en el repo el fichero _godir_ext_scan.txt_)
+
+Parametros:
+ * -x : permite añadir a la busqueda de directorios, busqueda de archivos con la extensiones mencinadas
+
+Estos son los directorios mas interesantes que gobuster a encontrado.
+
+En __changelog.txt__ podemos ver como __PHP__ es el lenguaje de servidor con el que esta contruida la aplicacion sweetrice.
+
+En __/as__ podemos encontrar el login de administracion del CMS.
+
+![login_CMS](img/login_CMS.PNG)
+
+En la ruta __/inc__ encontramos una interesante carpeta.
+
+![dir_inc](img/dir_inc.PNG)
+
+Y Dentro de la ruta mysql_backup, encontramos un fichero de backup de sql desprotegido.
+
+![mysql_dir](img/mysql_dir.PNG)
+
+Descargando este archivo y abriendolo en un editor de texto. (preferiblemente Sublimetext o Visual Studio Code)
+
+![login_creds](img/login_creds.PNG)
+
+Dentro encontramos las credenciales de administrador para entrar en el CMS.
+
+> User: manager
+
+> Pass: ?¿
+
+El campo passwd da la impresion de ser un hash. Accedemos a [crackstation](https://crackstation.net/) para crackear el hash o use alguno de los crackers de kali.
+
+![Crackstation](img/Crack_md5.PNG)
+
+> User: manager
+
+> Pass: Password123
+
+ 
 # WIP
+
